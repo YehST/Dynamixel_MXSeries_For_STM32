@@ -7,14 +7,27 @@ extern "C" {
 #endif
 
 /* user type structure----------------------- */
+typedef union{
+    uint8_t Error;
+    struct {
+        uint8_t InputVoltage : 1;
+        uint8_t AngleLimit : 1;
+        uint8_t OverHeating : 1;
+        uint8_t Range : 1;
+        uint8_t CheakSum : 1;
+        uint8_t OverLoad : 1;
+        uint8_t Instruction : 1;
+    } ErrorType;
+} SERVO_Error;
+
 typedef struct{
     float Present_Position;
     int Raw_Encoder;
-    float Speed;
-    float Load;
-    float voltage;
-    int8_t Temperature;
-} SERVO_state;
+    float Present_Speed;
+    float Present_Load;
+    float Present_voltage;
+    int8_t Present_Temperature;
+} SERVO_State;
 
 typedef struct{
     int8_t Kp;
@@ -32,20 +45,22 @@ typedef struct{
 } SERVO_Constrain;
 
 typedef struct{
+    uint8_t Mode;
+    /*
+        0x01: Wheel Mode
+        0x02: Joint Mode
+        0x03: Multi-turn Mode
+    */
     uint8_t ID;
-    uint8_t Error;
-    SERVO_state state;
+    SERVO_Error Error;
+    SERVO_State state;
     SERVO_Controller controller;
     int8_t ModelNumber;
     uint8_t FirmVersion;
     SERVO_Constrain Limit;
-
+    uint8_t StatusReturnLevel;
+    float MultiTurnOffset;
 } Dynamixel_SERVO;
-
-typedef enum {
-    DYNAMIXEL_READ = 0,
-    DYNAMIXEL_WRITE = 1
-} DYNAMIXEL_RW;
 /* User private variables -------------------------------------- */
 
 
@@ -97,8 +112,11 @@ typedef enum {
 #define DYNAMIXEL_CT_RAM_Punch 0x30 // RW
 #define DYNAMIXEL_CT_RAM_RT_Tick 0x32 // R
 #define DYNAMIXEL_CT_RAM_GoalAcc 0x49 // RW
+#define DYNAMIXEL_READ_ALL_PresentData 0xAA
 /* User private function prototypes -----------------------------------------------*/
 void Dynamixel_Init_Handle(UART_HandleTypeDef* huart);
+void Dynamixel_Servo_Init(Dynamixel_SERVO* Allservo, int8_t NumOfServo);
+static void Errorchk(Dynamixel_SERVO* servo);
 static uint8_t CheckSUM(uint8_t* data, int8_t len);
 static void Send_Data(uint8_t* data, int8_t len);
 static void Receive_Data(Dynamixel_SERVO* servo, uint8_t* TxData);
@@ -114,13 +132,31 @@ void Dynamixel_W_CCWAngleLimit(Dynamixel_SERVO* servo, float Pos);
 void Dynamixel_W_MinVoltageLimit(Dynamixel_SERVO* servo, float MinVotalge);
 void Dynamixel_W_MaxVoltageLimit(Dynamixel_SERVO* servo, float MaxVotalge);
 void Dynamixel_W_MaxTorque(Dynamixel_SERVO* servo, uint8_t percent);
+void Dynamixel_R_AllLimit(Dynamixel_SERVO* servo);
+void Dynamixel_W_StatusReturnLevel(Dynamixel_SERVO* servo, uint8_t Mode);
+void Dynamixel_R_StatusReturnLevel(Dynamixel_SERVO* servo);
+void Dynamixel_W_AlarmLED_ErrorType(Dynamixel_SERVO* servo, uint8_t ErrorType);
+void Dynamixel_W_ShutDown_ErrorType(Dynamixel_SERVO* servo, uint8_t ErrorType);
+void Dynamixel_R_AlarmErrorType(Dynamixel_SERVO* servo);
+void Dynamixel_W_MultiTurnOffset(Dynamixel_SERVO* servo, float Offset);
+void Dynamixel_R_MultiTurnOffset(Dynamixel_SERVO* servo);
+void Dynamixel_W_ResolutionDivider(Dynamixel_SERVO* servo, uint8_t Divider);
+void Dynamixel_R_ResolutionDivider(Dynamixel_SERVO* servo);
 
+void Dynamixel_Select_Model(Dynamixel_SERVO* servo, uint8_t Mode);
 void Dynamixel_W_TorqueEnable(Dynamixel_SERVO* servo, uint8_t Enable);
 void Dynamixel_W_LED(Dynamixel_SERVO* servo, uint8_t Enable);
 void Dynamixel_W_PID(Dynamixel_SERVO* servo, uint8_t Kp, uint8_t Ki, uint8_t Kd);
 void Dynamixel_R_PID(Dynamixel_SERVO* servo);
 void Dynamixel_W_GoalPosition(Dynamixel_SERVO* servo, float Pos);
+void Dynamixel_W_MovingSpeed(Dynamixel_SERVO* servo, float Speed);
 void Dynamixel_R_PresentPos(Dynamixel_SERVO* servo);
+void Dynamixel_R_PresentSpeed(Dynamixel_SERVO* servo);
+void Dynamixel_R_PresentLoad(Dynamixel_SERVO* servo);
+void Dynamixel_R_PresentVoltage(Dynamixel_SERVO* servo);
+void Dynamixel_R_PresentTemperature(Dynamixel_SERVO* servo);
+void Dynamixel_R_AllPresentData(Dynamixel_SERVO* servo);
+
 #ifdef __cplusplus
 }
 #endif
