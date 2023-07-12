@@ -60,6 +60,7 @@ typedef struct{
     SERVO_Constrain Limit;
     uint8_t StatusReturnLevel;
     float MultiTurnOffset;
+    int16_t RealTime_Tick;
 } Dynamixel_SERVO;
 /* User private variables -------------------------------------- */
 
@@ -106,13 +107,14 @@ typedef struct{
 #define DYNAMIXEL_CT_RAM_PresentLoad 0x28 // R
 #define DYNAMIXEL_CT_RAM_PresentVoltage 0x2A // R
 #define DYNAMIXEL_CT_RAM_PresentTemperature 0x2B // R
+#define DYNAMIXEL_READ_ALL_PresentData 0xAA
 #define DYNAMIXEL_CT_RAM_Registered 0x2C // R
 #define DYNAMIXEL_CT_RAM_Moving 0x2E // R
 #define DYNAMIXEL_CT_RAM_Lock 0x2F // RW
 #define DYNAMIXEL_CT_RAM_Punch 0x30 // RW
 #define DYNAMIXEL_CT_RAM_RT_Tick 0x32 // R
 #define DYNAMIXEL_CT_RAM_GoalAcc 0x49 // RW
-#define DYNAMIXEL_READ_ALL_PresentData 0xAA
+
 /* User private function prototypes -----------------------------------------------*/
 void Dynamixel_Init_Handle(UART_HandleTypeDef* huart);
 void Dynamixel_Servo_Init(Dynamixel_SERVO* Allservo, int8_t NumOfServo);
@@ -156,6 +158,13 @@ void Dynamixel_R_PresentLoad(Dynamixel_SERVO* servo);
 void Dynamixel_R_PresentVoltage(Dynamixel_SERVO* servo);
 void Dynamixel_R_PresentTemperature(Dynamixel_SERVO* servo);
 void Dynamixel_R_AllPresentData(Dynamixel_SERVO* servo);
+void Dynamixel_R_Registered(Dynamixel_SERVO* servo);
+void Dynamixel_W_Lock(Dynamixel_SERVO* servo, uint8_t lock);
+void Dynamixel_R_Lock(Dynamixel_SERVO* servo);
+void Dynamixel_W_Punch(Dynamixel_SERVO* servo, uint16_t Punch);
+void Dynamixel_R_Punch(Dynamixel_SERVO* servo);
+void Dynamixel_R_RealTimeTick(Dynamixel_SERVO* servo);
+void Dynamixel_W_GoalAcc(Dynamixel_SERVO* servo, float ACC);
 
 #ifdef __cplusplus
 }

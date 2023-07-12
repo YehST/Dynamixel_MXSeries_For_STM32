@@ -173,7 +173,10 @@ static void Decode_Data(Dynamixel_SERVO* servo, uint8_t CMD, uint8_t* RxData, in
         servo->state.Present_voltage = (float)tmp_data/10.;
         servo->state.Present_Temperature = (int8_t)(RxData[12]);
         break;
-      
+      case DYNAMIXEL_CT_RAM_RT_Tick:
+        servo->RealTime_Tick = ((RxData[6]<<8)|RxData[5]);
+        break;
+
       case 0xFF:
         break;
     }
@@ -655,6 +658,112 @@ void Dynamixel_R_AllPresentData(Dynamixel_SERVO* servo){
   data[2] = DYNAMIXEL_INST_Read;
   data[3] = DYNAMIXEL_CT_RAM_PresentPosition;
   data[4] = 0x08; //return data length
+  data[5] = CheckSUM(data, data[1]+1);
+  Send_Data(data, sizeof(data));
+  Receive_Data(servo, data);
+}
+
+void Dynamixel_R_Registered(Dynamixel_SERVO* servo){
+  uint8_t data[6];
+  data[0] = servo->ID;
+  data[1] = sizeof(data)-2; //len
+  data[2] = DYNAMIXEL_INST_Read;
+  data[3] = DYNAMIXEL_CT_RAM_Registered;
+  data[4] = 0x01; //return data length
+  data[5] = CheckSUM(data, data[1]+1);
+  Send_Data(data, sizeof(data));
+  Receive_Data(servo, data);
+}
+
+void Dynamixel_R_Moving(Dynamixel_SERVO* servo){
+  uint8_t data[6];
+  data[0] = servo->ID;
+  data[1] = sizeof(data)-2; //len
+  data[2] = DYNAMIXEL_INST_Read;
+  data[3] = DYNAMIXEL_CT_RAM_Moving;
+  data[4] = 0x01; //return data length
+  data[5] = CheckSUM(data, data[1]+1);
+  Send_Data(data, sizeof(data));
+  Receive_Data(servo, data);
+}
+
+void Dynamixel_W_Lock(Dynamixel_SERVO* servo, uint8_t lock){
+  /*
+    0x00 : EEPROM area can be modified.
+    0x01 : EEPROM area cannot be modified.
+  */
+  uint8_t data[6];
+  data[0] = servo->ID;
+  data[1] = sizeof(data)-2; //len
+  data[2] = DYNAMIXEL_INST_Write;
+  data[3] = DYNAMIXEL_CT_RAM_Lock;
+  data[4] = lock;
+  data[5] = CheckSUM(data, data[1]+1);
+  Send_Data(data, sizeof(data));
+  Receive_Data(servo, data);
+}
+
+void Dynamixel_R_Lock(Dynamixel_SERVO* servo){
+  /*
+    0x00 : EEPROM area can be modified.
+    0x01 : EEPROM area cannot be modified.
+  */
+  uint8_t data[6];
+  data[0] = servo->ID;
+  data[1] = sizeof(data)-2; //len
+  data[2] = DYNAMIXEL_INST_Read;
+  data[3] = DYNAMIXEL_CT_RAM_Lock;
+  data[4] = 0x01; //return data length
+  data[5] = CheckSUM(data, data[1]+1);
+  Send_Data(data, sizeof(data));
+  Receive_Data(servo, data);
+}
+
+void Dynamixel_W_Punch(Dynamixel_SERVO* servo, uint16_t Punch){
+  uint8_t data[7];
+  data[0] = servo->ID;
+  data[1] = sizeof(data)-2; //len
+  data[2] = DYNAMIXEL_INST_Write;
+  data[3] = DYNAMIXEL_CT_RAM_Punch;
+  uint16_t tmp = (uint16_t)(Punch);
+  data[4] = (uint8_t)(tmp);
+  data[5] = (uint8_t)(tmp>>8);
+  data[6] = CheckSUM(data, data[1]+1);
+  Send_Data(data, sizeof(data));
+  Receive_Data(servo, data);
+}
+
+void Dynamixel_R_Punch(Dynamixel_SERVO* servo){
+  uint8_t data[6];
+  data[0] = servo->ID;
+  data[1] = sizeof(data)-2; //len
+  data[2] = DYNAMIXEL_INST_Read;
+  data[3] = DYNAMIXEL_CT_RAM_Punch;
+  data[4] = 0x02; //return data length
+  data[5] = CheckSUM(data, data[1]+1);
+  Send_Data(data, sizeof(data));
+  Receive_Data(servo, data);
+}
+
+void Dynamixel_R_RealTimeTick(Dynamixel_SERVO* servo){
+  uint8_t data[6];
+  data[0] = servo->ID;
+  data[1] = sizeof(data)-2; //len
+  data[2] = DYNAMIXEL_INST_Read;
+  data[3] = DYNAMIXEL_CT_RAM_RT_Tick;
+  data[4] = 0x02; //return data length
+  data[5] = CheckSUM(data, data[1]+1);
+  Send_Data(data, sizeof(data));
+  Receive_Data(servo, data);
+}
+
+void Dynamixel_W_GoalAcc(Dynamixel_SERVO* servo, float ACC){
+  uint8_t data[6];
+  data[0] = servo->ID;
+  data[1] = sizeof(data)-2; //len
+  data[2] = DYNAMIXEL_INST_Write;
+  data[3] = DYNAMIXEL_CT_RAM_GoalAcc;
+  data[4] = (uint8_t)(ACC/8.583);
   data[5] = CheckSUM(data, data[1]+1);
   Send_Data(data, sizeof(data));
   Receive_Data(servo, data);
