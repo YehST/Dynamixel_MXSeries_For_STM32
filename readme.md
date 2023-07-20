@@ -32,9 +32,9 @@
   ![circuit](./circuit.JPG)
 
 - NOTICE:
-  1. ...
+  1. If you encounter compilation failure due to the absence of the "printData" function, please replace "printData" with your own function for displaying data (e.g., printf), or copy it from the main file of the example program and use it accordingly.
 ## Example
-- 
+- In this example, two MX-28 servo motors are used simultaneously, communicating with the motors through the STM32F407-DISC1 development board. The main functionality is to continuously receive all the current information from the motors, and it includes examples of basic functions such as writing BaudRate, writing PID controller parameters, and angle control. The specific wiring is shown in the following table.
    | STM32 PIN | Device PIN |
   | --- | --- |
   |PD8|PC RX|
