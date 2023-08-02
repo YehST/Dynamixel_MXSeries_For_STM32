@@ -44,8 +44,14 @@ typedef struct{
     uint16_t Torque_limit;
 } SERVO_Constrain;
 
+typedef enum {
+    MX_Wheel_Mode = 1,
+    MX_Joint_Mode = 2,
+    MX_MultiTurn_Mode = 3,
+} SERVO_Mode;
+
 typedef struct{
-    uint8_t Mode;
+    SERVO_Mode Mode;
     /*
         0x01: Wheel Mode
         0x02: Joint Mode
@@ -145,7 +151,7 @@ void Dynamixel_R_MultiTurnOffset(Dynamixel_SERVO* servo);
 void Dynamixel_W_ResolutionDivider(Dynamixel_SERVO* servo, uint8_t Divider);
 void Dynamixel_R_ResolutionDivider(Dynamixel_SERVO* servo);
 
-void Dynamixel_Select_Model(Dynamixel_SERVO* servo, uint8_t Mode);
+void Dynamixel_Select_Model(Dynamixel_SERVO* servo, SERVO_Mode Mode);
 void Dynamixel_W_TorqueEnable(Dynamixel_SERVO* servo, uint8_t Enable);
 void Dynamixel_W_LED(Dynamixel_SERVO* servo, uint8_t Enable);
 void Dynamixel_W_PID(Dynamixel_SERVO* servo, uint8_t Kp, uint8_t Ki, uint8_t Kd);

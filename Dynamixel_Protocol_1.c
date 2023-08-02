@@ -459,7 +459,7 @@ void Dynamixel_R_ResolutionDivider(Dynamixel_SERVO* servo){
 }
 
 
-void Dynamixel_Select_Model(Dynamixel_SERVO* servo, uint8_t Mode){
+void Dynamixel_Select_Model(Dynamixel_SERVO* servo, SERVO_Mode Mode){
   /*
         0x01: Wheel Mode
         0x02: Joint Mode
@@ -468,7 +468,7 @@ void Dynamixel_Select_Model(Dynamixel_SERVO* servo, uint8_t Mode){
  uint8_t data[9];
  uint16_t CMD;
   switch(Mode){
-    case 0x01:
+    case 1:
       data[0] = servo->ID;
       data[1] = sizeof(data)-2; //len
       data[2] = DYNAMIXEL_INST_Write;
@@ -480,7 +480,7 @@ void Dynamixel_Select_Model(Dynamixel_SERVO* servo, uint8_t Mode){
       data[7] = (uint8_t)(CMD>>8); 
       data[8] = CheckSUM(data, data[1]+1);
       break;
-    case 0x02:
+    case 2:
       data[0] = servo->ID;
       data[1] = sizeof(data)-2; //len
       data[2] = DYNAMIXEL_INST_Write;
@@ -493,7 +493,7 @@ void Dynamixel_Select_Model(Dynamixel_SERVO* servo, uint8_t Mode){
       data[7] = (uint8_t)(CMD>>8); 
       data[8] = CheckSUM(data, data[1]+1);
       break;
-    case 0x03:
+    case 3:
       data[0] = servo->ID;
       data[1] = sizeof(data)-2; //len
       data[2] = DYNAMIXEL_INST_Write;
