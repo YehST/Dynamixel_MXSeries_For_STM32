@@ -19,11 +19,6 @@
             {.ID = 0},
             {.ID = 1}
         };
-
-        Dynamixel_Init_Handle(&huart6); // Initialize the handle for communication.
-
-        Dynamixel_Servo_Init(&Servo, 1); // Initialize one servo motor.
-        Dynamixel_Servo_Init(Servo, 2); // Initialize multiple servo motor.
     ```
     The data obtained from the motor response will be directly stored in the servo motor structure provided as an argument. You can retrieve the data by calling the appropriate functions when needed.
 

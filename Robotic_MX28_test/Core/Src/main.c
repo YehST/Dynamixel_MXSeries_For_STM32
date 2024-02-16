@@ -127,7 +127,7 @@ int main(void)
   
   // Dynamixel_W_BaudRate(&Servo[0], 2000000);
   // Dynamixel_W_BaudRate(&Servo[1], 2000000);
-  Dynamixel_W_TorqueEnable(&Servo[0], 1);
+  // Dynamixel_W_TorqueEnable(&Servo[0], 1);
   Dynamixel_W_TorqueEnable(&Servo[1], 1);
 //  Dynamixel_W_PID(&Servo[0], 33, 0, 1);
   // printData("%d, %d, %d\n", Servo[0].controller.Kp, Servo[0].controller.Ki, Servo[0].controller.Kd);
@@ -141,9 +141,9 @@ int main(void)
   {
     // Dynamixel_R_PresentPos(&Servo[0]);
     // Dynamixel_R_PresentPos(&Servo[1]);
-    Dynamixel_R_AllPresentData(&Servo[0]);
+    // Dynamixel_R_AllPresentData(&Servo[0]);
     Dynamixel_R_AllPresentData(&Servo[1]);
-    printData("%d, %.2f, %.2f\n", HAL_GetTick(), Servo[0].state.Present_Position, Servo[1].state.Present_Position);
+    printData("%d, %.2f\n", HAL_GetTick(), Servo[1].state.Present_Position);
     
     // printData("%d, %.2f, %.2f, %.2f, %.2f, %d\n", HAL_GetTick(), Servo[0].state.Present_Position, Servo[0].state.Present_Speed, Servo[0].state.Present_Load, Servo[0].state.Present_voltage, Servo[0].state.Present_Temperature);
     
@@ -249,7 +249,7 @@ static void MX_USART6_UART_Init(void)
 
   /* USER CODE END USART6_Init 1 */
   huart6.Instance = USART6;
-  huart6.Init.BaudRate = 115200;
+  huart6.Init.BaudRate = 2000000;
   huart6.Init.WordLength = UART_WORDLENGTH_8B;
   huart6.Init.StopBits = UART_STOPBITS_1;
   huart6.Init.Parity = UART_PARITY_NONE;
@@ -296,16 +296,16 @@ static void MX_GPIO_Init(void)
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
   // ?œ¨?™è£¡??•ç?†æ¥?”¶?ˆ°??„æ•¸???
-  if (huart->Instance == USART6)
-  {
-    // ?ˆ¤?–·?”¶?ˆ°??„æ•¸??šæ˜¯?¦?‚ºMX28??„å?æ??
-    for (uint8_t i = 0; i<=6; i++){
-      printData("%x", rxData[i]);
-    }
-    printData("\n");
-  }
+  // if (huart->Instance == USART6)
+  // {
+  //   // ?ˆ¤?–·?”¶?ˆ°??„æ•¸??šæ˜¯?¦?‚ºMX28??„å?æ??
+  //   for (uint8_t i = 0; i<=6; i++){
+  //     printData("%x", rxData[i]);
+  //   }
+  //   printData("\n");
+  // }
   
-  HAL_UART_Receive_IT(&huart6, rxData, sizeof(rxData)); // ??Ÿå?•ä?‹ä?æ¬¡æ¥?”¶
+  // HAL_UART_Receive_IT(&huart6, rxData, sizeof(rxData)); // ??Ÿå?•ä?‹ä?æ¬¡æ¥?”¶
 }
 /* USER CODE END 4 */
 

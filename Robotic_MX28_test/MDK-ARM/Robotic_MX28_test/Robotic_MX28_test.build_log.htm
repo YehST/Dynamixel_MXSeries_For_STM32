@@ -5,10 +5,10 @@
 <h2>Tool Versions:</h2>
 IDE-Version: £gVision V5.24.2.0
 Copyright (C) 2017 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: Ye Shu-Ting, Mechatronic Lab, LIC=----
+License Information: Ye Shu-Ting, Mechatronic Lab, LIC=8VRJ7-EKW4N-8TS3P-M23JY-VQY6N-SR0AA
  
 Tool Versions:
-Toolchain:       MDK-Lite  Version: 5.24.1
+Toolchain:       MDK-ARM Plus  Version: 5.24.1
 Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
 C Compiler:      Armcc.exe V5.06 update 5 (build 528)
 Assembler:       Armasm.exe V5.06 update 5 (build 528)
@@ -21,13 +21,20 @@ Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.1.0
 Dialog DLL:      TCM.DLL V1.32.0.0
  
 <h2>Project:</h2>
-d:\stm32\Stm32_Pratice\Robotic_MX28_test\MDK-ARM\Robotic_MX28_test.uvprojx
+d:\stm32\library\Dynamixel_MX_Series\Robotic_MX28_test\MDK-ARM\Robotic_MX28_test.uvprojx
 Project File Date:  07/15/2023
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'Robotic_MX28_test'
-"Robotic_MX28_test\Robotic_MX28_test.axf" - 0 Error(s), 0 Warning(s).
+compiling main.c...
+../Core/Src/main.c(73): warning:  #223-D: function "strlen" declared implicitly
+    HAL_UART_Transmit(&huart3, (uint8_t *)str, strlen(str), 100);
+../Core/Src/main.c: 1 warning, 0 errors
+linking...
+Program Size: Code=16330 RO-data=1002 RW-data=132 ZI-data=1772  
+FromELF: creating hex file...
+"Robotic_MX28_test\Robotic_MX28_test.axf" - 0 Error(s), 1 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -50,7 +57,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.6.0
-Build Time Elapsed:  00:00:00
+Build Time Elapsed:  00:00:03
 </pre>
 </body>
 </html>

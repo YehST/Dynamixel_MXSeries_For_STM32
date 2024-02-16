@@ -3,16 +3,16 @@
         {
             "name": "Robotic_MX28_test",
             "includePath": [
-                "d:\\stm32\\Stm32_Pratice\\Robotic_MX28_test\\Core\\Inc",
-                "d:\\stm32\\Stm32_Pratice\\Robotic_MX28_test\\Drivers\\STM32F4xx_HAL_Driver\\Inc",
-                "d:\\stm32\\Stm32_Pratice\\Robotic_MX28_test\\Drivers\\STM32F4xx_HAL_Driver\\Inc\\Legacy",
-                "d:\\stm32\\Stm32_Pratice\\Robotic_MX28_test\\Drivers\\CMSIS\\Device\\ST\\STM32F4xx\\Include",
-                "d:\\stm32\\Stm32_Pratice\\Robotic_MX28_test\\Drivers\\CMSIS\\Include",
+                "d:\\stm32\\library\\Dynamixel_MX_Series\\Robotic_MX28_test\\Core\\Inc",
+                "d:\\stm32\\library\\Dynamixel_MX_Series\\Robotic_MX28_test\\Drivers\\STM32F4xx_HAL_Driver\\Inc",
+                "d:\\stm32\\library\\Dynamixel_MX_Series\\Robotic_MX28_test\\Drivers\\STM32F4xx_HAL_Driver\\Inc\\Legacy",
+                "d:\\stm32\\library\\Dynamixel_MX_Series\\Robotic_MX28_test\\Drivers\\CMSIS\\Device\\ST\\STM32F4xx\\Include",
+                "d:\\stm32\\library\\Dynamixel_MX_Series\\Robotic_MX28_test\\Drivers\\CMSIS\\Include",
                 "C:\\Keil_v5\\ARM\\ARMCC\\include",
                 "C:\\Keil_v5\\ARM\\ARMCC\\include\\rw",
-                "d:\\stm32\\Stm32_Pratice\\Robotic_MX28_test\\MDK-ARM",
-                "d:\\stm32\\Stm32_Pratice\\Robotic_MX28_test\\Core\\Src",
-                "d:\\stm32\\Stm32_Pratice\\Robotic_MX28_test\\Drivers\\STM32F4xx_HAL_Driver\\Src"
+                "d:\\stm32\\library\\Dynamixel_MX_Series\\Robotic_MX28_test\\MDK-ARM",
+                "d:\\stm32\\library\\Dynamixel_MX_Series\\Robotic_MX28_test\\Core\\Src",
+                "d:\\stm32\\library\\Dynamixel_MX_Series\\Robotic_MX28_test\\Drivers\\STM32F4xx_HAL_Driver\\Src"
             ],
             "defines": [
                 "USE_HAL_DRIVER",
